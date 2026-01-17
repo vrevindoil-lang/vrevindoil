@@ -47,6 +47,10 @@ const Home = () => {
               <h2>3</h2>
               <p>Premium Oils</p>
             </div>
+            <div>
+              <h2>10K+</h2>
+              <p>Happy Customers</p>
+            </div>
           </div>
         </div>
 
