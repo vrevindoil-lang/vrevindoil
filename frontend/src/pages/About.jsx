@@ -3,7 +3,7 @@ import aboutImage from "../assets/images/about.png";
 
 function About() {
   return (
-    <section className="about-section">
+    <section className="about-section" id="about">
       {/* Title */}
       <div className="about-header">
         <h1>

@@ -4,7 +4,7 @@ import oilImage from "../assets/images/oil.jpg";
 
 const Home = () => {
   return (
-    <div className="home-container">
+    <div className="home-container" id="home">
 
       {/* HERO SECTION */}
       <section className="hero-section">

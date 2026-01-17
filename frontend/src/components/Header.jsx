@@ -13,16 +13,18 @@ function Header() {
       <div className="vr-header-container">
         {/* Logo Section */}
         <div className="vr-logo-area">
-          <img src={logo} alt="VR Naturals Logo" className="vr-logo-img" />
-          <div className="vr-logo-text">
-            <h2>VR Naturals</h2>
-            <span>Pure Oils</span>
-          </div>
+          <a href="#home" onClick={handleClose}>
+            <img src={logo} alt="VR Naturals Logo" className="vr-logo-img" />
+            <div className="vr-logo-text">
+              <h2>VR Naturals</h2>
+              <span>Pure Oils</span>
+            </div>
+          </a>
         </div>
 
         {/* Navigation Menu */}
         <nav className={`vr-nav ${menuOpen ? "open" : ""}`}>
-          <a href="#" onClick={handleClose}>
+          <a href="#home" onClick={handleClose}>
             Home
           </a>
           <a href="#about" onClick={handleClose}>
