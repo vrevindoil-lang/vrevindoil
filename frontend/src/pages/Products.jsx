@@ -1,34 +1,24 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../assets/global.css";
-import coconut from "../assets/images/coconut.png";
-import ground from "../assets/images/ground.png";
-import sun from "../assets/images/sun.png";
+import { productsData } from "../data/products";
 
 const Products = () => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState({
     coconut: 0,
     groundnut: 0,
     sunflower: 0,
+    jaggery: 0,
     selectedSize: "1 Liter"
   });
 
-  const addToCart = (product) => {
-    setCart({
-      ...cart,
-      [product]: cart[product] + 1
-    });
+  const handleProductClick = (productId) => {
+    window.scrollTo(0, 0);
+    navigate(`/product/${productId}`);
   };
 
-  const removeFromCart = (product) => {
-    if (cart[product] > 0) {
-      setCart({
-        ...cart,
-        [product]: cart[product] - 1
-      });
-    }
-  };
-
-  const totalItems = cart.coconut + cart.groundnut + cart.sunflower;
+  const totalItems = cart.coconut + cart.groundnut + cart.sunflower + cart.jaggery;
 
   return (
     <div className="w-full pb-16" style={{ backgroundColor: "#f5f5f0", paddingTop: "140px" }} id="products">
@@ -39,50 +29,38 @@ const Products = () => {
           Our <span>Premium Oils</span>
         </h2>
         <p className="products-subheading">
-          Starting with three essential oils that bring purity and health to your kitchen
+          Discover our collection of pure, natural oils that bring purity and health to your kitchen
         </p>
       </div>
 
-      {/* Image Cards - 3 Cards Grid */}
+      {/* Image Cards - Product Grid */}
       <div className="product-cards-container px-6 lg:px-20 mb-20">
         <div className="product-cards-grid">
-
-          {/* Coconut Oil */}
-          <div className="simple-product-card">
-            <div className="simple-product-image">
-              <img src={coconut} alt="Coconut Oil" />
+          {productsData.map((product) => (
+            <div 
+              key={product.id} 
+              className="simple-product-card cursor-pointer"
+              onClick={() => handleProductClick(product.id)}
+            >
+              <div className="simple-product-image">
+                <img src={product.frontImage} alt={product.name} />
+              </div>
+              <div className="simple-product-info">
+                <h3 className="simple-product-name">{product.name}</h3>
+                <p className="simple-product-desc">{product.sizes[0].price > 249 ? 'Premium selection' : 'Cold-pressed natural'}</p>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.scrollTo(0, 0);
+                    navigate(`/product/${product.id}`);
+                  }} 
+                  className="add-to-cart-btn"
+                >
+                  View Details
+                </button>
+              </div>
             </div>
-            <div className="simple-product-info">
-              <h3 className="simple-product-name">Coconut Oil</h3>
-              <p className="simple-product-desc">Cold-pressed virgin coconut oil</p>
-              <button onClick={() => addToCart('coconut')} className="add-to-cart-btn">Add to Cart</button>
-            </div>
-          </div>
-
-          {/* Groundnut Oil */}
-          <div className="simple-product-card">
-            <div className="simple-product-image">
-              <img src={ground} alt="Groundnut Oil" />
-            </div>
-            <div className="simple-product-info">
-              <h3 className="simple-product-name">Groundnut Oil</h3>
-              <p className="simple-product-desc">Premium quality for Indian cooking</p>
-              <button onClick={() => addToCart('groundnut')} className="add-to-cart-btn">Add to Cart</button>
-            </div>
-          </div>
-
-          {/* Sunflower Oil */}
-          <div className="simple-product-card">
-            <div className="simple-product-image">
-              <img src={sun} alt="Sunflower Oil" />
-            </div>
-            <div className="simple-product-info">
-              <h3 className="simple-product-name">Sunflower Oil</h3>
-              <p className="simple-product-desc">Light & healthy for everyday use</p>
-              <button onClick={() => addToCart('sunflower')} className="add-to-cart-btn">Add to Cart</button>
-            </div>
-          </div>
-
+          ))}
         </div>
       </div>
 
