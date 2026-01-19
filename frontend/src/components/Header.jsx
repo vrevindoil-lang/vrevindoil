@@ -1,20 +1,22 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../assets/global.css";
 import logo from "../assets/images/vr.png";
 
 function Header() {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    // Get initial cart count - sum all quantities
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Get initial cart count - sum all quantities from sessionStorage
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     setCartCount(totalCount);
 
     // Listen for cart updates
     const handleCartUpdate = () => {
-      const updatedCart = JSON.parse(localStorage.getItem("cart")) || [];
+      const updatedCart = JSON.parse(sessionStorage.getItem("cart")) || [];
       const totalCount = updatedCart.reduce((sum, item) => sum + item.quantity, 0);
       setCartCount(totalCount);
     };
@@ -56,10 +58,19 @@ function Header() {
           </a>
         </nav>
 
-        {/* CTA Button with Cart Count */}
+        {/* CTA Button with Cart Count - Hidden on mobile until cart has items */}
         <button 
           className="vr-order-btn" 
-          style={{ display: "flex", alignItems: "center", gap: "8px", position: "relative" }}
+          onClick={() => navigate("/cart")}
+          style={{ 
+            display: cartCount > 0 ? "flex" : "none",
+            alignItems: "center", 
+            gap: "8px", 
+            position: "relative",
+            "@media (min-width: 768px)": {
+              display: "flex"
+            }
+          }}
         >
           Order Now
           {cartCount > 0 && (

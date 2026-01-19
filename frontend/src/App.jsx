@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
 import "./assets/global.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           }
         />
         <Route path="/product/:productId" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </Router>

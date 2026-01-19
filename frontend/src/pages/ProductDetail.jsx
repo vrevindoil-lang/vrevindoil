@@ -13,9 +13,12 @@ const ProductDetail = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     
+    // Clear old localStorage data (migrate to sessionStorage only)
+    localStorage.removeItem("cart");
+    
     if (product) {
-      // Load quantities from cart
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      // Load quantities from cart (using sessionStorage - clears on browser close)
+      const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
       const initial = {};
       
       product.sizes.forEach((size) => {
@@ -48,8 +51,8 @@ const ProductDetail = () => {
       [size]: newQuantity
     }));
 
-    // Update localStorage
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Update sessionStorage (clears on browser close)
+    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     const itemIndex = cart.findIndex(
       (item) => item.productId === product.id && item.size === size
     );
@@ -75,7 +78,7 @@ const ProductDetail = () => {
       }
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    sessionStorage.setItem("cart", JSON.stringify(cart));
     window.dispatchEvent(new Event("cartUpdated"));
   };
 
@@ -96,9 +99,9 @@ const ProductDetail = () => {
 
   return (
     <div className="w-full" style={{ backgroundColor: "#f5f5f0", minHeight: "100vh" }}>
-      <div style={{ paddingTop: "140px", paddingBottom: "60px" }}>
+      <div style={{ paddingTop: "140px", paddingBottom: "60px", paddingLeft: "40px", paddingRight: "40px" }}>
         {/* Back Button */}
-        <div className="px-6 lg:px-20 mb-12">
+        <div className="mb-12">
           <button
             onClick={() => navigate("/")}
             style={{
@@ -117,20 +120,20 @@ const ProductDetail = () => {
         </div>
 
         {/* Main Content - Full Width with Description on Top */}
-        <div className="px-6 lg:px-20">
+        <div>
           
           {/* Product Title and Description - Full Width */}
           <div style={{ marginBottom: "40px" }}>
-            <h1 style={{ fontSize: "42px", fontWeight: "700", color: "#1a1a1a", marginBottom: "20px" }}>
+            <h1 style={{ fontSize: "clamp(24px, 6vw, 42px)", fontWeight: "700", color: "#1a1a1a", marginBottom: "20px" }}>
               {product.name}
             </h1>
-            <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#555", maxWidth: "900px" }}>
+            <p style={{ fontSize: "clamp(14px, 4vw, 18px)", lineHeight: "1.8", color: "#555", maxWidth: "900px" }}>
               {product.description}
             </p>
           </div>
 
           {/* Image and Size Selection Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "50px", marginBottom: "50px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "clamp(20px, 5vw, 50px)", marginBottom: "50px" }}>
             
             {/* Left - Image */}
             <div>
@@ -139,8 +142,8 @@ const ProductDetail = () => {
                   width: "100%",
                   backgroundColor: "#fff",
                   borderRadius: "10px",
-                  padding: "30px",
-                  minHeight: "400px",
+                  padding: "clamp(15px, 4vw, 30px)",
+                  minHeight: "300px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -150,58 +153,55 @@ const ProductDetail = () => {
                 <img
                   src={product.backImage}
                   alt={product.name}
-                  style={{ maxWidth: "100%", maxHeight: "400px", objectFit: "contain" }}
+                  style={{ maxWidth: "100%", maxHeight: "300px", objectFit: "contain" }}
                 />
               </div>
             </div>
 
             {/* Right - Size Selection */}
-            <div>
-              <div style={{ backgroundColor: "#fff", padding: "30px", borderRadius: "10px", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-                <h3 style={{ fontSize: "20px", fontWeight: "700", marginBottom: "25px", color: "#2d5016" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Size & Quantity Block */}
+              <div style={{ backgroundColor: "#fff", padding: "clamp(15px, 4vw, 20px)", borderRadius: "10px", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
+                <h3 style={{ fontSize: "clamp(14px, 4vw, 16px)", fontWeight: "700", marginBottom: "15px", color: "#2d5016" }}>
                   Select Size & Quantity
                 </h3>
                 
-                <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                   {product.sizes.map((size, index) => (
                     <div
                       key={index}
                       style={{
-                        display: "grid",
-                        gridTemplateColumns: "auto 1fr auto",
-                        gap: "15px",
-                        alignItems: "center",
-                        padding: "15px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "8px",
+                        padding: "10px",
                         backgroundColor: "#f9f9f9",
-                        borderRadius: "8px",
+                        borderRadius: "6px",
                         border: "1px solid #e0e0e0"
                       }}
                     >
                       {/* Size and Price */}
                       <div>
-                        <h4 style={{ fontSize: "15px", fontWeight: "700", color: "#2d5016", marginBottom: "3px" }}>
+                        <h4 style={{ fontSize: "clamp(11px, 3vw, 13px)", fontWeight: "700", color: "#2d5016", marginBottom: "2px" }}>
                           {size.size}
                         </h4>
-                        <p style={{ fontSize: "16px", fontWeight: "700", color: "#333" }}>
+                        <p style={{ fontSize: "clamp(11px, 3vw, 13px)", fontWeight: "700", color: "#333" }}>
                           ₹{size.price}
                         </p>
                       </div>
 
-                      {/* Spacer */}
-                      <div></div>
-
                       {/* Quantity Controls */}
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px", justifyContent: "space-between" }}>
                         <button
                           onClick={() => handleQuantityChange(size.size, -1)}
                           style={{
-                            width: "36px",
-                            height: "36px",
+                            width: "24px",
+                            height: "24px",
                             backgroundColor: "#2d5016",
                             border: "none",
-                            borderRadius: "5px",
+                            borderRadius: "4px",
                             cursor: "pointer",
-                            fontSize: "20px",
+                            fontSize: "14px",
                             fontWeight: "600",
                             color: "#fff",
                             display: "flex",
@@ -211,19 +211,19 @@ const ProductDetail = () => {
                         >
                           −
                         </button>
-                        <span style={{ fontSize: "18px", fontWeight: "700", minWidth: "28px", textAlign: "center", color: "#2d5016" }}>
+                        <span style={{ fontSize: "clamp(12px, 3vw, 14px)", fontWeight: "700", color: "#2d5016" }}>
                           {quantities[size.size] || 0}
                         </span>
                         <button
                           onClick={() => handleQuantityChange(size.size, 1)}
                           style={{
-                            width: "36px",
-                            height: "36px",
+                            width: "24px",
+                            height: "24px",
                             backgroundColor: "#2d5016",
                             border: "none",
-                            borderRadius: "5px",
+                            borderRadius: "4px",
                             cursor: "pointer",
-                            fontSize: "20px",
+                            fontSize: "14px",
                             fontWeight: "600",
                             color: "#fff",
                             display: "flex",
@@ -240,19 +240,19 @@ const ProductDetail = () => {
 
                 {/* Order Summary */}
                 {totalItems > 0 && (
-                  <div style={{ backgroundColor: "#e8f4e0", padding: "15px", borderRadius: "8px", borderLeft: "4px solid #2d5016", marginTop: "20px" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px" }}>
-                      <div>
-                        <p style={{ fontSize: "12px", color: "#666", marginBottom: "5px" }}>Total Items</p>
-                        <p style={{ fontSize: "24px", fontWeight: "700", color: "#2d5016" }}>
+                  <div style={{ backgroundColor: "#e8f4e0", padding: "12px 16px", borderRadius: "6px", borderLeft: "4px solid #2d5016", marginTop: "12px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "15px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "clamp(12px, 3vw, 14px)", color: "#666" }}>Quantity:</span>
+                        <span style={{ fontSize: "clamp(14px, 4vw, 18px)", fontWeight: "700", color: "#2d5016" }}>
                           {totalItems}
-                        </p>
+                        </span>
                       </div>
-                      <div>
-                        <p style={{ fontSize: "12px", color: "#666", marginBottom: "5px" }}>Total Price</p>
-                        <p style={{ fontSize: "24px", fontWeight: "700", color: "#2d5016" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "clamp(12px, 3vw, 14px)", color: "#666" }}>Price:</span>
+                        <span style={{ fontSize: "clamp(14px, 4vw, 18px)", fontWeight: "700", color: "#2d5016" }}>
                           ₹{totalPrice}
-                        </p>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -260,84 +260,50 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-
-          {/* Why Choose This Product - Full Width */}
-          <div style={{ backgroundColor: "#fff", padding: "40px", borderRadius: "10px", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
-            <h3 style={{ fontSize: "22px", fontWeight: "700", marginBottom: "25px", color: "#2d5016" }}>
-              ✓ Why Choose This Product
-            </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "25px" }}>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>100% Natural & Cold-Pressed</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Extracted using traditional cold-press methods without any heat or chemicals.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>No Chemicals or Preservatives</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Pure essence with no artificial additives, keeping it safe for families.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>Rich in Essential Nutrients</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Packed with vitamins, minerals, and antioxidants for your health.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>Perfect for Cooking & Health</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Ideal for daily cooking, baking, and personal wellness routines.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>Sourced from Trusted Farmers</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Direct from reliable farmers practicing sustainable agriculture.
-                </p>
-              </div>
-              <div>
-                <p style={{ fontSize: "16px", fontWeight: "700", color: "#2d5016", marginBottom: "8px" }}>Fresh & Pure Quality</p>
-                <p style={{ fontSize: "14px", color: "#666", lineHeight: "1.6" }}>
-                  Made in small batches ensuring peak freshness and authentic taste.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Related Products Section */}
         <div style={{ marginTop: "60px", paddingTop: "50px", borderTop: "2px solid #ddd", backgroundColor: "#fff" }}>
-          <div className="px-6 lg:px-20 py-16">
-            <h2 style={{ fontSize: "32px", fontWeight: "700", marginBottom: "40px", color: "#2d5016", textAlign: "center" }}>
+          <div className="py-16">
+            <h2 style={{ fontSize: "clamp(20px, 6vw, 32px)", fontWeight: "700", marginBottom: "40px", color: "#2d5016", textAlign: "center" }}>
               Explore Our Other Products
             </h2>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "25px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "clamp(15px, 4vw, 25px)" }}>
               {productsData
                 .filter((p) => p.id !== productId)
-                .map((relatedProduct) => (
-                  <div
-                    key={relatedProduct.id}
-                    onClick={() => {
-                      window.scrollTo(0, 0);
-                      navigate(`/product/${relatedProduct.id}`);
-                    }}
-                    className="simple-product-card"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="simple-product-image">
-                      <img src={relatedProduct.frontImage} alt={relatedProduct.name} />
+                .map((relatedProduct) => {
+                  const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+                  const relatedCart = cart.filter((item) => item.productId === relatedProduct.id);
+                  const relatedCount = relatedCart.reduce((sum, item) => sum + item.quantity, 0);
+                  
+                  return (
+                    <div
+                      key={relatedProduct.id}
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        navigate(`/product/${relatedProduct.id}`);
+                      }}
+                      className="simple-product-card"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="simple-product-image">
+                        <img src={relatedProduct.frontImage} alt={relatedProduct.name} />
+                      </div>
+                      <div className="simple-product-info">
+                        <h3 className="simple-product-name" style={{ fontSize: "clamp(12px, 3vw, 16px)" }}>{relatedProduct.name}</h3>
+                        <p style={{ fontSize: "clamp(11px, 3vw, 13px)", color: "#2d5016", fontWeight: "600" }}>
+                          From ₹{relatedProduct.sizes[0].price}
+                        </p>
+                        {relatedCount > 0 && (
+                          <p style={{ fontSize: "clamp(10px, 3vw, 12px)", color: "#fff", fontWeight: "700", backgroundColor: "#2d5016", padding: "4px 8px", borderRadius: "4px", marginTop: "8px", textAlign: "center" }}>
+                            In Cart: {relatedCount}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div className="simple-product-info">
-                      <h3 className="simple-product-name">{relatedProduct.name}</h3>
-                      <p style={{ fontSize: "13px", color: "#2d5016", fontWeight: "600" }}>
-                        From ₹{relatedProduct.sizes[0].price}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           </div>
         </div>
