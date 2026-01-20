@@ -286,10 +286,7 @@ const Cart = () => {
               </div>
 
               <button
-                onClick={() => {
-                  alert("Order functionality coming soon! Your cart:\n\n" + 
-                    cartItems.map(item => `${item.productName} (${item.size}) × ${item.quantity}`).join("\n"));
-                }}
+                onClick={() => navigate("/checkout")}
                 style={{
                   width: "100%",
                   padding: "15px",

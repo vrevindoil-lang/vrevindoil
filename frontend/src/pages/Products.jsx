@@ -47,7 +47,7 @@ const Products = () => {
               </div>
               <div className="simple-product-info">
                 <h3 className="simple-product-name">{product.name}</h3>
-                <p className="simple-product-desc">{product.sizes[0].price > 249 ? 'Premium selection' : 'Cold-pressed natural'}</p>
+                <p className="simple-product-desc">{product.sizes[0].price > 400 ? 'Premium selection' : 'Cold-pressed natural'}</p>
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
@@ -80,11 +80,10 @@ const Products = () => {
                 value={cart.selectedSize}
                 onChange={(e) => setCart({...cart, selectedSize: e.target.value})}
               >
-                <option>500ml - ₹249</option>
-                <option>1 Liter - ₹399</option>
-                <option>2 Liter - ₹749</option>
-                <option>5 Liter - ₹1799</option>
-                <option>15 Liter - ₹4999</option>
+                <option>1 Liter - ₹380</option>
+                <option>2 Liter - ₹760</option>
+                <option>5 Liter - ₹1900</option>
+                <option>15 Liter - ₹5700</option>
               </select>
             </div>
 
@@ -106,13 +105,8 @@ const Products = () => {
         <div className="sizes-grid">
 
           <div className="size-card">
-            <h3 className="size-value">500ml</h3>
-            <p className="size-description">Perfect for trying</p>
-          </div>
-
-          <div className="size-card">
             <h3 className="size-value">1 Liter</h3>
-            <p className="size-description">Best for families</p>
+            <p className="size-description">Perfect for trying</p>
           </div>
 
           <div className="size-card">
@@ -128,7 +122,7 @@ const Products = () => {
 
           <div className="size-card">
             <h3 className="size-value">15 Liters</h3>
-            <p className="size-description">Bulk buying</p>
+            <p className="size-description">Best for bulk buying</p>
           </div>
         </div>
       </div>
