@@ -25,7 +25,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full pb-16" style={{ backgroundColor: "#f5f5f0", paddingTop: "140px" }} id="contact">
+    <div className="w-full pb-16" style={{ backgroundColor: "#f8f5f0", paddingTop: "20px" }} id="contact">
       {/* Heading */}
       <div className="contact-heading-section">
         <h2 className="contact-heading">
@@ -53,8 +53,7 @@ const Contact = () => {
               <div className="contact-info-icon">☎️</div>
               <div className="contact-info-details">
                 <h4 className="contact-info-label">Phone</h4>
-                <p className="contact-info-text">+91 98765 43210</p>
-                <p className="contact-info-text">+91 98765 43211</p>
+                <p className="contact-info-text">7338556876</p>
               </div>
             </div>
 
@@ -63,8 +62,7 @@ const Contact = () => {
               <div className="contact-info-icon">✉️</div>
               <div className="contact-info-details">
                 <h4 className="contact-info-label">Email</h4>
-                <p className="contact-info-text">info@vrnaturals.com</p>
-                <p className="contact-info-text">orders@vrnaturals.com</p>
+                <p className="contact-info-text">vrevind.oil@gmail.com</p>
               </div>
             </div>
 
@@ -74,18 +72,8 @@ const Contact = () => {
               <div className="contact-info-details">
                 <h4 className="contact-info-label">Address</h4>
                 <p className="contact-info-text">VR Naturals Oil Mill</p>
-                <p className="contact-info-text">Industrial Area, Sector 5</p>
-                <p className="contact-info-text">Chennai, Tamil Nadu - 600001</p>
-              </div>
-            </div>
-
-            {/* Business Hours */}
-            <div className="contact-info-card">
-              <div className="contact-info-icon">🕒</div>
-              <div className="contact-info-details">
-                <h4 className="contact-info-label">Business Hours</h4>
-                <p className="contact-info-text">Monday - Saturday: 9:00 AM - 6:00 PM</p>
-                <p className="contact-info-text">Sunday: Closed</p>
+                <p className="contact-info-text">#10, Melya, Gauribidanur</p>
+                <p className="contact-info-text">Chikkaballapur, Karnataka - 561208</p>
               </div>
             </div>
           </div>

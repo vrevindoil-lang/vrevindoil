@@ -21,12 +21,12 @@ const Products = () => {
   const totalItems = cart.coconut + cart.groundnut + cart.sunflower + cart.jaggery;
 
   return (
-    <div className="w-full pb-16" style={{ backgroundColor: "#f5f5f0", paddingTop: "140px" }} id="products">
+    <div className="w-full pb-16" style={{ backgroundColor: "#f8f5f0", paddingTop: "20px" }} id="products">
 
       {/* Heading */}
       <div className="products-heading-section">
         <h2 className="products-heading">
-          Our <span>Premium Oils</span>
+          Our <span>Premium Products</span>
         </h2>
         <p className="products-subheading">
           Discover our collection of pure, natural oils that bring purity and health to your kitchen
@@ -38,7 +38,7 @@ const Products = () => {
         <div className="product-cards-grid">
           {productsData.map((product) => (
             <div 
-              key={product.id} 
+              key={product.id} hhh
               className="simple-product-card cursor-pointer"
               onClick={() => handleProductClick(product.id)}
             >
@@ -56,7 +56,7 @@ const Products = () => {
                   }} 
                   className="add-to-cart-btn"
                 >
-                  View Details
+                  🛒 Add to cart
                 </button>
               </div>
             </div>
@@ -96,36 +96,7 @@ const Products = () => {
 
      
 
-      {/* Sizes Section */}
-      <div className="sizes-section px-6 lg:px-20">
-        <h2 className="sizes-heading">
-          Available Sizes
-        </h2>
-
-        <div className="sizes-grid">
-
-          <div className="size-card">
-            <h3 className="size-value">1 Liter</h3>
-            <p className="size-description">Perfect for trying</p>
-          </div>
-
-          <div className="size-card">
-            <h3 className="size-value">2 Liters</h3>
-            <p className="size-description">Great for regular use</p>
-          </div>
-
-          <div className="size-card popular">
-            <span className="popular-badge">POPULAR</span>
-            <h3 className="size-value">5 Liters</h3>
-            <p className="size-description">Maximum value</p>
-          </div>
-
-          <div className="size-card">
-            <h3 className="size-value">15 Liters</h3>
-            <p className="size-description">Best for bulk buying</p>
-          </div>
-        </div>
-      </div>
+     
 
       {/* Why Choose Section */}
       <section className="benefits-section">

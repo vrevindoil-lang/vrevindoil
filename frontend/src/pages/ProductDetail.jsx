@@ -105,17 +105,17 @@ const ProductDetail = () => {
           <button
             onClick={() => navigate("/")}
             style={{
-              padding: "10px 20px",
-              backgroundColor: "transparent",
-              border: "2px solid #2d5016",
-              color: "#2d5016",
-              borderRadius: "5px",
+              padding: "6px 10px",
+              backgroundColor: "#2d5016",
+              border: "none",
+              color: "#fff",
+              borderRadius: "4px",
               cursor: "pointer",
-              fontSize: "16px",
+              fontSize: "14px",
               fontWeight: "600"
             }}
           >
-            ← Back to Products
+            ←
           </button>
         </div>
 
@@ -263,7 +263,7 @@ const ProductDetail = () => {
         </div>
 
         {/* Related Products Section */}
-        <div style={{ marginTop: "60px", paddingTop: "50px", borderTop: "2px solid #ddd", backgroundColor: "#fff" }}>
+        <div style={{ marginTop: "60px", paddingTop: "50px", borderTop: "2px solid #ddd", backgroundColor: "transparent" }}>
           <div className="py-16">
             <h2 style={{ fontSize: "clamp(20px, 6vw, 32px)", fontWeight: "700", marginBottom: "40px", color: "#2d5016", textAlign: "center" }}>
               Explore Our Other Products

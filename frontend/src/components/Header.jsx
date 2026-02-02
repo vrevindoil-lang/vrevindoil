@@ -28,32 +28,45 @@ function Header() {
   const handleToggle = () => setMenuOpen((prev) => !prev);
   const handleClose = () => setMenuOpen(false);
 
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    handleClose();
+    
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerHeight = 120; // Approximate header height
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
     <header className="vr-header">
       <div className="vr-header-container">
         {/* Logo Section */}
         <div className="vr-logo-area">
-          <a href="#home" onClick={handleClose}>
+          <a href="#home" onClick={(e) => handleNavClick(e, "home")}>
             <img src={logo} alt="VR Naturals Logo" className="vr-logo-img" />
             <div className="vr-logo-text">
               <h2>VR Naturals</h2>
-              <span>Pure Oils</span>
             </div>
           </a>
         </div>
 
         {/* Navigation Menu */}
         <nav className={`vr-nav ${menuOpen ? "open" : ""}`}>
-          <a href="#home" onClick={handleClose}>
-            Home
-          </a>
-          <a href="#about" onClick={handleClose}>
-            About
-          </a>
-          <a href="#products" onClick={handleClose}>
+          <a href="#products" onClick={(e) => handleNavClick(e, "products")}>
             Products
           </a>
-          <a href="#contact" onClick={handleClose}>
+          <a href="#about" onClick={(e) => handleNavClick(e, "about")}>
+            About
+          </a>
+          <a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>
             Contact
           </a>
         </nav>

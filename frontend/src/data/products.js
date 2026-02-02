@@ -41,12 +41,24 @@ export const productsData = [
   {
     id: 'jaggery',
     name: 'Jaggery',
-    frontImage: new URL('../assets/images/jaggery.png', import.meta.url).href,
-    backImage: new URL('../assets/images/jaggery.png', import.meta.url).href,
+    frontImage: new URL('../assets/images/jaggery.jpg', import.meta.url).href,
+    backImage: new URL('../assets/images/jaggery.jpg', import.meta.url).href,
     description: 'Premium quality jaggery made from pure sugarcane juice. Rich in minerals and iron, perfect for boosting immunity and energy. Traditional recipe with authentic taste. No refined sugar, only natural sweetness from pure sugarcane.',
     sizes: [
       { size: '1 kg', price: 80 },
       { size: '5 kg', price: 400 }
+    ]
+  },
+  {
+    id: 'groundnuts',
+    name: 'Groundnuts',
+    frontImage: new URL('../assets/images/groundnuts.jpg', import.meta.url).href,
+    backImage: new URL('../assets/images/groundnuts.jpg', import.meta.url).href,
+    description: 'Fresh and crunchy groundnuts, rich in protein and healthy fats. Perfect for snacking or cooking. Naturally processed to retain all nutrients and authentic taste. High quality groundnuts sourced directly from farms.',
+    sizes: [
+      { size: '500 gm', price: 100 },
+      { size: '1 kg', price: 190 },
+      { size: '5 kg', price: 900 }
     ]
   }
 ];
